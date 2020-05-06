@@ -1,4 +1,4 @@
-.App {
+  .App {
   text-align: center;
 }
 
@@ -30,7 +30,8 @@
 }
 
 .Date-div {
-  width: 15%;
+  width: 36%;
+  margin-left: 15px;
   float: left;
 }
 
@@ -41,12 +42,12 @@
 }
 
 .Input-text {
-  height: 22px;
+  height: 52px;
   width: 100%;
 }
 
 .Span-button {
-  margin-left: -12rem;
+  margin-left: -26rem;
 }
 
 .Date {
@@ -54,12 +55,13 @@
 }
 
 .Button {
-  height: 28px;
+  height: 50px;
 }
 
 .App-link {
   color: #61dafb;
 }
+.default {margin: 1rem 2rem 2rem 8rem; text-align: left; padding: 10px 0px 10px 10px}
 
 @keyframes App-logo-spin {
   from {
