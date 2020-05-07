@@ -2,47 +2,48 @@
 import {Classes} from "jss";
 import moment from "moment";
 import {Link} from 'react-router-dom';
+import {inject, observer} from 'mobx-react';
 import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core';
 
 // required local dependencies
 import {ListCasesStyle} from './ListCasesStyle';
 import Pagination from '../shared/Pagination';
+import CasesStore from "../../stores/casesStore";
 
 interface IProps {
-    classes: Classes;
-    cases: any,
-    total: number
+    classes: Classes,
+    store: CasesStore
 }
 
 interface IState {
     error?: any,
-    cases: any,
-    total: number,
-    count: number,
     isLoaded: boolean,
 }
 
+@inject('store')
+@observer
 class ListCases extends Component<IProps, IState> {
     public state: IState = {
         error: null,
-        cases: this.props.cases,
-        total: this.props.total,
-        count: 10,
         isLoaded: false,
     };
 
+    private case: any = this.props.store.cases.slice(0, 10);
+
     componentDidMount() {
+        this.props.store.updatePageCases(this.case);
         this.setState({
-            isLoaded: true
+            isLoaded: true,
+
         });
     }
 
     private showData = (pageNo:number) => {
-        this.fetchData(pageNo, this.state.count)
-            .then(result => {
+        this.fetchData(pageNo, this.props.store.last)
+            .then((result:any) => {
+                this.props.store.updatePageCases(result);
                 this.setState({
-                    cases: result,
                     isLoaded: true
                 });
             })
@@ -72,18 +73,18 @@ class ListCases extends Component<IProps, IState> {
 
 
     render() {
-        const { error, isLoaded, cases, total } = this.state;
+        const { error, isLoaded } = this.state;
         if (error) {
             return <div  className = {this.props.classes.default}>Ooops, something went wrong</div>;
         } else if (!isLoaded) {
             return <div  className = {this.props.classes.default}>Loading...</div>;
-        } else if(!total){
+        } else if(!this.props.store.totalCasesCount){
             return <div  className = {this.props.classes.default}>No results</div>;
         } else {
             return (
                 <div>
-                    <div className = {this.props.classes.countDiv}>total: <span>{total}</span></div>
-                    {cases.map((obj:any) => {
+                    <div className = {this.props.classes.countDiv}>total: <span>{this.props.store.totalCasesCount}</span></div>
+                    {this.props.store.currentPageCases.map((obj:any) => {
                         // @ts-ignore
                         return (<div key={obj.id} className = {this.props.classes.root}>
                             <div className = {this.props.classes.imageDiv}>
@@ -97,7 +98,7 @@ class ListCases extends Component<IProps, IState> {
                         </div>
                         )
                     })}
-                    <Pagination cases = {total} showData = {this.showData}/>
+                    <Pagination cases= {this.props.store.totalCasesCount} showData = {this.showData}/>
                 </div>
             );
         }

@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bffb19ad-d430-4a46-a9e4-9dec69712987" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/stores/casesStore.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/home/Home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/Home.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/list-cases/ListCases.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/list-cases/ListCases.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shared/Pagination.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/Pagination.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -73,7 +75,7 @@
       <updated>1588759430073</updated>
       <workItem from="1588759431358" duration="14160000" />
       <workItem from="1588826425186" duration="26000" />
-      <workItem from="1588865111635" duration="1277000" />
+      <workItem from="1588865111635" duration="8997000" />
     </task>
     <servers />
   </component>

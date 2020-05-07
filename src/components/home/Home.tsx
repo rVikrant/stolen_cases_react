@@ -2,36 +2,35 @@
 import React, {Component} from 'react';
 import MomentUtils from "@date-io/moment";
 import moment from "moment";
-import {observer} from 'mobx-react';
+import {observer, inject} from 'mobx-react';
+import {Classes} from "jss";
 import {MuiPickersUtilsProvider, KeyboardDatePicker} from "@material-ui/pickers";
 
 // import local dependencies
 import './Home.css';
 import Header from "../shared/Header";
 import ListCases from "../list-cases/ListCases";
-import {Classes} from "jss";
+import CasesStore from "../../stores/casesStore";
 
 
 interface IProps {
-    classes: Classes
+    classes: Classes,
+    store: CasesStore
 }
 
 interface IState {
     error?: any,
-    cases: any,
-    total: number,
     search: string,
     isLoaded: boolean,
     selectedDateTo: string,
     selectedDateFrom: string
 }
 
+@inject('store')
 @observer
 class Home extends Component<IProps, IState> {
     public readonly state: IState = {
         error: null,
-        cases: [],
-        total: 0,
         isLoaded: false,
         search: "",
         selectedDateTo: moment().format("MM/DD/YYYY"),
@@ -39,11 +38,11 @@ class Home extends Component<IProps, IState> {
     };
 
     componentDidMount() {
+        console.log("mount---", this.props.store);
         this.fetchData(0, 0, "")
             .then((result: any) => {
+                this.props.store.updateCases(result);
                 this.setState({
-                    cases: result.slice(0, 10),
-                    total: result.length,
                     isLoaded: true
                 });
             })
@@ -65,8 +64,6 @@ class Home extends Component<IProps, IState> {
 
         this.setState({
            isLoaded: false,
-            total: 0,
-            cases: []
         });
 
         let {search, selectedDateFrom, selectedDateTo} = this.state,
@@ -78,9 +75,8 @@ class Home extends Component<IProps, IState> {
 
         this.fetchData(0,0,query)
             .then((result: any) => {
+                this.props.store.updateCases(result);
                 this.setState({
-                    cases: result,
-                    total: result.length,
                     isLoaded: true
                 });
             })
@@ -162,7 +158,7 @@ class Home extends Component<IProps, IState> {
                     <span className="Span-button"><button className="Button" onClick = {this.getData}>Find cases</button></span>
                 </div>
                 {this.state.error && <div  className = "default">Ooops, something went wrong</div>}
-                {this.state.isLoaded ? <ListCases cases = {this.state.cases} total = {this.state.total}/> : <div  className = "default">Loading...</div>}
+                {this.state.isLoaded ? <ListCases store = {this.props.store}/> : <div  className = "default">Loading...</div>}
             </div>
         );
     }

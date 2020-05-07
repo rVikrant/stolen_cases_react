@@ -1,17 +1,16 @@
 // import dependencies
 import React, {Component} from 'react';
-// import DatePicker from 'react-date-picker';
 import {
     BrowserRouter as Router,
     Route,
-    // Link,
-    Switch
+    Switch,
 } from 'react-router-dom';
 
 // import local dependencies
 import './App.css';
 import Home from "./components/home/Home";
 import Case from "./components/case/Case";
+
 
 class App extends Component {
     render() {
