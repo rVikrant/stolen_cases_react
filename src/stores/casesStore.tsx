@@ -7,6 +7,7 @@ class CasesStore {
     @observable cases:[] = [];
     @observable last:number = 10;
     @observable initial:number = 0;
+    @observable search:string = '';
     @observable currentPageCases:[] = [];
 
     constructor() {
@@ -20,6 +21,11 @@ class CasesStore {
     @action
     updateCases(cases: []): void {
         this.cases = cases;
+    }
+
+    @action
+    updateQuery(query: string): void {
+        this.search = query;
     }
 
     @action

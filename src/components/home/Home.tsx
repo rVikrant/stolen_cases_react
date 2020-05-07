@@ -39,7 +39,7 @@ class Home extends Component<IProps, IState> {
 
     componentDidMount() {
         console.log("mount---", this.props.store);
-        this.fetchData(0, 0, "")
+        this.fetchData()
             .then((result: any) => {
                 this.props.store.updateCases(result);
                 this.setState({
@@ -73,7 +73,9 @@ class Home extends Component<IProps, IState> {
         if(selectedDateTo) query += `&occurred_before=${moment(selectedDateTo).startOf('day').valueOf()}`;
         if(selectedDateFrom) query += `&occurred_after=${moment(selectedDateFrom).startOf('day').valueOf()}`;
 
-        this.fetchData(0,0,query)
+        this.props.store.updateQuery(query);
+
+        this.fetchData()
             .then((result: any) => {
                 this.props.store.updateCases(result);
                 this.setState({
@@ -100,11 +102,11 @@ class Home extends Component<IProps, IState> {
         });
     };
 
-    private fetchData = (page: number,count: number, query: string) => {
+    private fetchData = () => {
         return new Promise((resolve, reject) => {
-            let url = `https://bikewise.org/api/v2/incidents?page=${page}&per_page=${count}`;
+            let url = `https://bikewise.org/api/v2/incidents?page=0`;
 
-            if(query) url+=query;
+            if(this.props.store.search) url += this.props.store.search;
 
             fetch(url)
                 .then(res => res.json())
@@ -117,15 +119,14 @@ class Home extends Component<IProps, IState> {
                     }
                 )
         })
-    }
+    };
 
     render() {
         return (
             <div className="App">
                 <Header/>
                 <div className="Filter-container">
-                    <div className="Input-div"><input onChange={this.handleClick} className="Input-text" type="text"
-                                                      placeholder="Search case descriptions"></input></div>
+                    <div className="Input-div"><input onChange={this.handleClick} className="Input-text" type="text" placeholder="Search case descriptions"></input></div>
                     <div className="Date-div"><MuiPickersUtilsProvider utils={MomentUtils}>
                         <div className="Date-div">
                             <KeyboardDatePicker
@@ -158,7 +159,7 @@ class Home extends Component<IProps, IState> {
                     <span className="Span-button"><button className="Button" onClick = {this.getData}>Find cases</button></span>
                 </div>
                 {this.state.error && <div  className = "default">Ooops, something went wrong</div>}
-                {this.state.isLoaded ? <ListCases store = {this.props.store}/> : <div  className = "default">Loading...</div>}
+                {this.state.isLoaded ? <ListCases store = {this.props.store} /> : <div  className = "default">Loading...</div>}
             </div>
         );
     }

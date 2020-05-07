@@ -13,7 +13,7 @@ import CasesStore from "../../stores/casesStore";
 
 interface IProps {
     classes: Classes,
-    store: CasesStore
+    store: CasesStore,
 }
 
 interface IState {
@@ -29,7 +29,7 @@ class ListCases extends Component<IProps, IState> {
         isLoaded: false,
     };
 
-    private case: any = this.props.store.cases.slice(0, 10);
+    private case: any = this.props.store.totalCasesCount ? this.props.store.cases.slice(this.props.store.initial, this.props.store.last) : [];
 
     componentDidMount() {
         this.props.store.updatePageCases(this.case);
@@ -70,7 +70,6 @@ class ListCases extends Component<IProps, IState> {
                 )
         })
     };
-
 
     render() {
         const { error, isLoaded } = this.state;
