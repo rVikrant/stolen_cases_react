@@ -77,9 +77,10 @@ class Home extends Component<IProps, IState> {
         if(selectedDateFrom) query += `&occurred_after=${moment(selectedDateFrom).startOf('day').valueOf()}`;
 
         this.fetchData(0,0,query)
-            .then(result => {
+            .then((result: any) => {
                 this.setState({
                     cases: result,
+                    total: result.length,
                     isLoaded: true
                 });
             })

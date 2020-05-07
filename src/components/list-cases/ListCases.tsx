@@ -97,7 +97,7 @@ class ListCases extends Component<IProps, IState> {
                         </div>
                         )
                     })}
-                    {total && <Pagination cases = {total} showData = {this.showData}/>}
+                    <Pagination cases = {total} showData = {this.showData}/>
                 </div>
             );
         }
