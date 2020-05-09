@@ -18,7 +18,7 @@ class Header extends Component<Props> {
     render() {
         const {classes} = this.props;
 
-        return <div className={classes.root}>
+        return <div className={classes.header}>
             <img className={classes.image} src={require('../../assets/berlin-police.jpg')} alt=''/>
             <p className={classes.para}> Police Department of Berlin <span className={classes.span}> Stolen bikes </span></p>
         </div>

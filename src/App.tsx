@@ -1,21 +1,24 @@
 // import dependencies
 import React, {Component} from 'react';
 import {
-    BrowserRouter as Router,
+    // BrowserRouter as Router,
+    Router,
     Route,
     Switch,
 } from 'react-router-dom';
 
 // import local dependencies
 import './App.css';
-import {Home} from "./components/home/Home";
+import Home from "./components/home/Home";
 import Case from "./components/case/Case";
+import { createBrowserHistory } from "history";
 
+const history = createBrowserHistory();
 
 class App extends Component {
     render() {
         return (
-            <Router>
+            <Router history={history}>
                 <div className="App">
                     <Switch>
                         <Route exact path='/' component={Home}></Route>

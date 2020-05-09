@@ -4,7 +4,7 @@ import { createStyles } from '@material-ui/core';
 
 // create styles and export
 export const HeaderStyle = () => createStyles({
-    root: {
+    header: {
         margin: '-2rem 1rem 1rem 9rem',
         'max-width': 'fit-content'
     },

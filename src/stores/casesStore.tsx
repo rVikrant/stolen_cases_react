@@ -4,7 +4,7 @@ import { observable, computed, autorun, action } from 'mobx';
 
 // create store
 class CasesStore {
-    @observable cases:[] = [];
+    @observable cases:any = [];
     @observable last:number = 10;
     @observable initial:number = 0;
     @observable search:string = '';
@@ -20,7 +20,7 @@ class CasesStore {
     }
 
     @action
-    updateCases(cases: []): void {
+    updateCases(cases: [{ address: string; description: string; source: { api_url: string; html_url: string; name: string }; media: { image_url: string; image_url_thumb: string }; title: string; location_description: null; type: string; type_properties: null; url: string; location_type: null; occurred_at: number; updated_at: number; id: number }]): void {
         this.cases = cases;
     }
 
@@ -30,7 +30,7 @@ class CasesStore {
     }
 
     @action
-    updatePageCases(cases: []): void {
+    updatePageCases(cases: any): void {
         this.currentPageCases = cases;
     }
 

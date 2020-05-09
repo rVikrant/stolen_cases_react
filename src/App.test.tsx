@@ -1,10 +1,19 @@
+// import required dependencies
+import {Provider} from "mobx-react";
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import App from './App';
 
- import React from 'react';
- import ReactDom from "react-dom";
- import { MemoryRouter } from "react-router-dom";
- import {Provider, inject, observer} from "mobx-react";
- import { render } from '@testing-library/react';
- import App from './App';
+import CasesStore from "./stores/casesStore";
+
+// create store object
+const appState = new CasesStore();
+
+it('renders without crashing', () => {
+    const div = document.createElement('div');
+    ReactDOM.render(<Provider store={appState}><App/></Provider>, div);
+});
+
 /*
  // import dependency
  import CasesStore from "./stores/casesStore";

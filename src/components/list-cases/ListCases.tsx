@@ -24,6 +24,11 @@ interface IState {
 @inject('store')
 @observer
 class ListCases extends Component<IProps, IState> {
+
+    constructor(props: IProps) {
+        super(props)
+    }
+
     public state: IState = {
         error: null,
         isLoaded: false,
@@ -39,9 +44,9 @@ class ListCases extends Component<IProps, IState> {
         });
     }
 
-    private showData = (pageNo:number) => {
+    private showData = (pageNo: number) => {
         this.fetchData(pageNo, this.props.store.last)
-            .then((result:any) => {
+            .then((result: any) => {
                 this.props.store.updatePageCases(result);
                 this.setState({
                     isLoaded: true
@@ -55,7 +60,7 @@ class ListCases extends Component<IProps, IState> {
             })
     };
 
-    private fetchData = (page: number,count: number) => {
+    private fetchData = (page: number, count: number) => {
         return new Promise((resolve, reject) => {
             console.log(count, 'COUNT');
             fetch(`https://bikewise.org/api/v2/incidents?page=${page}&per_page=${count}`)
@@ -72,32 +77,35 @@ class ListCases extends Component<IProps, IState> {
     };
 
     render() {
-        const { error, isLoaded } = this.state;
+        const {error, isLoaded} = this.state;
         if (error) {
-            return <div  className = {this.props.classes.default}>Ooops, something went wrong</div>;
+            return <div className={this.props.classes.default}>Ooops, something went wrong</div>;
         } else if (!isLoaded) {
-            return <div  className = {this.props.classes.default}>Loading...</div>;
-        } else if(!this.props.store.totalCasesCount){
-            return <div  className = {this.props.classes.default}>No results</div>;
+            return <div className={this.props.classes.default}>Loading...</div>;
+        } else if (!this.props.store.totalCasesCount) {
+            return <div className={this.props.classes.default}>No results</div>;
         } else {
             return (
                 <div>
-                    <div className = {this.props.classes.countDiv}>total: <span>{this.props.store.totalCasesCount}</span></div>
-                    {this.props.store.currentPageCases.map((obj:any) => {
+                    <div className={this.props.classes.countDiv}>total: <span>{this.props.store.totalCasesCount}</span>
+                    </div>
+                    {this.props.store.currentPageCases.map((obj: any) => {
                         // @ts-ignore
-                        return (<div key={obj.id} className = {this.props.classes.root}>
-                            <div className = {this.props.classes.imageDiv}>
-                                <img className = {this.props.classes.image} src={obj.media.image_url_thumb} alt = ""/>
+                        return (<div key={obj.id} className={this.props.classes.root}>
+                                <div className={this.props.classes.imageDiv}>
+                                    <img className={this.props.classes.image} src={obj.media.image_url_thumb} alt=""/>
+                                </div>
+                                <div className={this.props.classes.para}>
+                                    <Link to={{pathname: `/case/${obj.id}`}}
+                                          onClick={() => this.props.store.updateCaseToshow(obj)}>{obj.title}</Link>
+                                    <span className={this.props.classes.span}>{obj.description}</span>
+                                    <span
+                                        className={this.props.classes.span}>{moment(obj.occurred_at).format('ll')} - {obj.address}</span>
+                                </div>
                             </div>
-                            <div className = {this.props.classes.para}>
-                                <Link to={{pathname: `/case/${obj.id}`}} onClick={() => this.props.store.updateCaseToshow(obj)}>{obj.title}</Link>
-                                <span className = {this.props.classes.span}>{obj.description}</span>
-                                <span className = {this.props.classes.span}>{moment(obj.occurred_at).format('ll')} - {obj.address}</span>
-                            </div>
-                        </div>
                         )
                     })}
-                    <Pagination cases= {this.props.store.totalCasesCount} showData = {this.showData}/>
+                    <Pagination cases={this.props.store.totalCasesCount} showData={this.showData}/>
                 </div>
             );
         }

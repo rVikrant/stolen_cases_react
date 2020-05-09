@@ -26,7 +26,14 @@ interface IState {
 
 @inject('store')
 @observer
-export class Home extends Component<IProps, IState> {
+class Home extends Component<IProps, IState> {
+
+    constructor(props: IProps) {
+        super(props);
+
+        // this.fetchData = this.fetchData.bind(this);
+    };
+
     public readonly state: IState = {
         error: null,
         isLoaded: false,
@@ -42,7 +49,7 @@ export class Home extends Component<IProps, IState> {
             this.setState({
                 isLoaded: true
             });
-        }catch(error) {
+        } catch (error) {
             this.setState({
                 isLoaded: true,
                 error
@@ -59,15 +66,15 @@ export class Home extends Component<IProps, IState> {
     private getData = async () => {
 
         this.setState({
-           isLoaded: false,
+            isLoaded: false,
         });
 
         let {search, selectedDateFrom, selectedDateTo} = this.state,
             query = ``;
 
-        if(search) query += `&query=${search}`;
-        if(selectedDateTo) query += `&occurred_before=${moment(selectedDateTo).startOf('day').valueOf()}`;
-        if(selectedDateFrom) query += `&occurred_after=${moment(selectedDateFrom).startOf('day').valueOf()}`;
+        if (search) query += `&query=${search}`;
+        if (selectedDateTo) query += `&occurred_before=${moment(selectedDateTo).startOf('day').valueOf()}`;
+        if (selectedDateFrom) query += `&occurred_after=${moment(selectedDateFrom).startOf('day').valueOf()}`;
 
         this.props.store.updateQuery(query);
 
@@ -77,7 +84,7 @@ export class Home extends Component<IProps, IState> {
             this.setState({
                 isLoaded: true
             });
-        }catch(error) {
+        } catch (error) {
             this.setState({
                 isLoaded: true,
                 error
@@ -97,7 +104,7 @@ export class Home extends Component<IProps, IState> {
         });
     };
 
-    public fetchData = async () => {
+    fetchData = async () => {
         try {
             let url = `https://bikewise.org/api/v2/incidents?page=0`;
 
@@ -116,14 +123,15 @@ export class Home extends Component<IProps, IState> {
             <div className="App">
                 <Header/>
                 <div className="Filter-container">
-                    <div className="Input-div"><input onChange={this.handleClick} className="Input-text" type="text" placeholder="Search case descriptions"></input></div>
+                    <div className="Input-div"><input onChange={this.handleClick} className="Input-text" type="text"
+                                                      placeholder="Search case descriptions"></input></div>
                     <div className="Date-div"><MuiPickersUtilsProvider utils={MomentUtils}>
                         <div className="Date-div">
                             <KeyboardDatePicker
                                 id="from"
                                 label="from"
                                 format="MM/DD/YYYY"
-                                inputVariant= "outlined"
+                                inputVariant="outlined"
                                 value={this.state.selectedDateFrom}
                                 onChange={this.handleDateFrom}
                                 KeyboardButtonProps={{
@@ -136,7 +144,7 @@ export class Home extends Component<IProps, IState> {
                                 id="to"
                                 label="to"
                                 format="MM/DD/YYYY"
-                                inputVariant= "outlined"
+                                inputVariant="outlined"
                                 value={this.state.selectedDateTo}
                                 onChange={this.handleDateTo}
                                 KeyboardButtonProps={{
@@ -146,13 +154,14 @@ export class Home extends Component<IProps, IState> {
                         </div>
                     </MuiPickersUtilsProvider>
                     </div>
-                    <span className="Span-button"><button className="Button" onClick = {this.getData}>Find cases</button></span>
+                    <span className="Span-button"><button className="Button" onClick={this.getData}>Find cases</button></span>
                 </div>
-                {this.state.error && <div  className = "default">Ooops, something went wrong</div>}
-                {this.state.isLoaded ? <ListCases store = {this.props.store} /> : <div  className = "default">Loading...</div>}
+                {this.state.error && <div className="default">Ooops, something went wrong</div>}
+                {this.state.isLoaded ? <ListCases store={this.props.store}/> :
+                    <div className="default">Loading...</div>}
             </div>
         );
     }
 }
 
-// export default Home;
+export default Home;
