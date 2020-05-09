@@ -90,7 +90,7 @@ class ListCases extends Component<IProps, IState> {
                                 <img className = {this.props.classes.image} src={obj.media.image_url_thumb} alt = ""/>
                             </div>
                             <div className = {this.props.classes.para}>
-                                <Link to={{pathname: "/case/"+obj.id, state: obj}}>{obj.title}</Link>
+                                <Link to={{pathname: `/case/${obj.id}`}} onClick={() => this.props.store.updateCaseToshow(obj)}>{obj.title}</Link>
                                 <span className = {this.props.classes.span}>{obj.description}</span>
                                 <span className = {this.props.classes.span}>{moment(obj.occurred_at).format('ll')} - {obj.address}</span>
                             </div>

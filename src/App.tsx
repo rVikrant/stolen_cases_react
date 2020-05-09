@@ -8,7 +8,7 @@ import {
 
 // import local dependencies
 import './App.css';
-import Home from "./components/home/Home";
+import {Home} from "./components/home/Home";
 import Case from "./components/case/Case";
 
 

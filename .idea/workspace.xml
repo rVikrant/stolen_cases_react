@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bffb19ad-d430-4a46-a9e4-9dec69712987" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.test.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.test.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/case/Case.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/case/Case.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/home/Home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/Home.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/list-cases/ListCases.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/list-cases/ListCases.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/stores/casesStore.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/casesStore.tsx" afterDir="false" />
@@ -73,7 +79,9 @@
       <updated>1588759430073</updated>
       <workItem from="1588759431358" duration="14160000" />
       <workItem from="1588826425186" duration="26000" />
-      <workItem from="1588865111635" duration="13388000" />
+      <workItem from="1588865111635" duration="18553000" />
+      <workItem from="1588913195714" duration="1375000" />
+      <workItem from="1588928262442" duration="8863000" />
     </task>
     <servers />
   </component>

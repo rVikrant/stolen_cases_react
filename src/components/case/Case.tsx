@@ -1,6 +1,7 @@
 // import required dependencies
 import {Classes} from "jss";
 import moment from "moment";
+import {inject, observer} from 'mobx-react';
 import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core';
 
@@ -9,24 +10,18 @@ import Header from "../shared/Header";
 import {CaseStyle} from './CaseStyle';
 
 interface IProps {
-    classes: Classes;
-    location: {
-        state: any
-    }
+    classes: Classes,
+    store: any
 }
 
-interface IState {
-    error?: any,
-    cases: any,
-    total: number,
-    count: number,
-    isLoaded: boolean,
-}
+interface IState {}
 
+@inject('store')
+@observer
 class Case extends Component<IProps, IState> {
 
     render() {
-        const {state} = this.props.location,
+        const state = this.props.store.currentCase,
             {classes} = this.props;
 
         return (

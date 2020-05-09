@@ -3,7 +3,6 @@ import React, {Component} from 'react';
 import MomentUtils from "@date-io/moment";
 import moment from "moment";
 import {observer, inject} from 'mobx-react';
-import {Classes} from "jss";
 import {MuiPickersUtilsProvider, KeyboardDatePicker} from "@material-ui/pickers";
 
 // import local dependencies
@@ -14,7 +13,6 @@ import CasesStore from "../../stores/casesStore";
 
 
 interface IProps {
-    classes: Classes,
     store: CasesStore
 }
 
@@ -28,7 +26,7 @@ interface IState {
 
 @inject('store')
 @observer
-class Home extends Component<IProps, IState> {
+export class Home extends Component<IProps, IState> {
     public readonly state: IState = {
         error: null,
         isLoaded: false,
@@ -37,21 +35,19 @@ class Home extends Component<IProps, IState> {
         selectedDateFrom: moment().format("MM/DD/YYYY"),
     };
 
-    componentDidMount() {
-        console.log("mount---", this.props.store);
-        this.fetchData()
-            .then((result: any) => {
-                this.props.store.updateCases(result);
-                this.setState({
-                    isLoaded: true
-                });
-            })
-            .catch(error => {
-                this.setState({
-                    isLoaded: true,
-                    error
-                });
-            })
+    async componentDidMount() {
+        try {
+            let result: any = await this.fetchData();
+            this.props.store.updateCases(result.incidents);
+            this.setState({
+                isLoaded: true
+            });
+        }catch(error) {
+            this.setState({
+                isLoaded: true,
+                error
+            });
+        }
     }
 
     private handleClick = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,7 +56,7 @@ class Home extends Component<IProps, IState> {
         });
     };
 
-    private getData = () => {
+    private getData = async () => {
 
         this.setState({
            isLoaded: false,
@@ -75,19 +71,18 @@ class Home extends Component<IProps, IState> {
 
         this.props.store.updateQuery(query);
 
-        this.fetchData()
-            .then((result: any) => {
-                this.props.store.updateCases(result);
-                this.setState({
-                    isLoaded: true
-                });
-            })
-            .catch(error => {
-                this.setState({
-                    isLoaded: true,
-                    error
-                });
-            })
+        try {
+            let result: any = await this.fetchData();
+            this.props.store.updateCases(result.incidents);
+            this.setState({
+                isLoaded: true
+            });
+        }catch(error) {
+            this.setState({
+                isLoaded: true,
+                error
+            });
+        }
     };
 
     private handleDateTo = (value: any) => {
@@ -102,23 +97,18 @@ class Home extends Component<IProps, IState> {
         });
     };
 
-    private fetchData = () => {
-        return new Promise((resolve, reject) => {
+    public fetchData = async () => {
+        try {
             let url = `https://bikewise.org/api/v2/incidents?page=0`;
 
-            if(this.props.store.search) url += this.props.store.search;
+            if (this.props.store.search) url += this.props.store.search;
 
-            fetch(url)
-                .then(res => res.json())
-                .then(
-                    (result) => {
-                        resolve(result.incidents);
-                    },
-                    (error) => {
-                        reject(error);
-                    }
-                )
-        })
+            let res = await fetch(url);
+
+            return res.json();
+        } catch (e) {
+            throw e;
+        }
     };
 
     render() {
@@ -165,4 +155,4 @@ class Home extends Component<IProps, IState> {
     }
 }
 
-export default Home;
+// export default Home;
